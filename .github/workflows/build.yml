@@ -19,89 +19,95 @@ jobs:
     if: github.actor != 'allcontributors[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - nome : Finalizar compra
+        utiliza : actions/checkout@v4
 
-      - name: Install binutils
-        run: |
+      - nome : Instalar binutils
+        executar : |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
 
-      - name: Cache build tools
-        uses: actions/cache@v4
+      - nome : Ferramentas de compilação de cache
+        utiliza : actions/cache@v4
+        com :
+          caminho : |
+            ferramentas/bin2c/bin2c
+            ferramentas/gbafix/gbafix
+            ferramentas/gbagfx/gbagfx
+            ferramentas/jsonproc/jsonproc
+            ferramentas/mapjson/mapjson
+            ferramentas/mid2agb/mid2agb
+            ferramentas/preproc/preproc
+            ferramentas/ramscrgen/ramscrgen
+            ferramentas/rsfont/rsfont
+            ferramentas/scaninc/scaninc
+            ferramentas/processo de treinamento/processo de treinamento
+            ferramentas/compresSmol/compresSmol
+            ferramentas/compresSmol/mapa de mosaicos compresSmol
+            ferramentas/wav2agb/wav2agb
+          chave : tools-$ { { runner.os } } -$ { { hashFiles( 'tools/*/Makefile' ,  'tools/**/*.c' ,  'tools/**/*.cpp' ,  'tools/**/*.h' ) } }
+
+      - nome : ROM (Esmeralda)
+        ambiente :
+          VERSÃO_DO_JOGO : ESMERALDA
+        executar : make -j$(nproc) -O tudo
+       - name: Upload ROM
+        uses: actions/upload-artifact@v4
         with:
-          path: |
-            tools/bin2c/bin2c
-            tools/gbafix/gbafix
-            tools/gbagfx/gbagfx
-            tools/jsonproc/jsonproc
-            tools/mapjson/mapjson
-            tools/mid2agb/mid2agb
-            tools/preproc/preproc
-            tools/ramscrgen/ramscrgen
-            tools/rsfont/rsfont
-            tools/scaninc/scaninc
-            tools/trainerproc/trainerproc
-            tools/compresSmol/compresSmol
-            tools/compresSmol/compresSmolTilemap
-            tools/wav2agb/wav2agb
-          key: tools-${{ runner.os }}-${{ hashFiles('tools/*/Makefile', 'tools/**/*.c', 'tools/**/*.cpp', 'tools/**/*.h') }}
+          name: pokeemerald-rom
+          path: pokeemerald.gba
 
-      - name: ROM (Emerald)
-        env:
-          GAME_VERSION: EMERALD
-        run: make -j$(nproc) -O all
+      
+  build-firered :
+    se : github.actor != 'allcontributors[bot]'
+    runs-on : ubuntu-latest
+    passos :
+      - nome : Finalizar compra
+        utiliza : actions/checkout@v4
 
-  build-firered:
-    if: github.actor != 'allcontributors[bot]'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install binutils
-        run: |
+      - nome : Instalar binutils
+        executar : |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
 
-      - name: Cache build tools
-        uses: actions/cache@v4
-        with:
-          path: |
-            tools/bin2c/bin2c
-            tools/gbafix/gbafix
-            tools/gbagfx/gbagfx
-            tools/jsonproc/jsonproc
-            tools/mapjson/mapjson
-            tools/mid2agb/mid2agb
-            tools/preproc/preproc
-            tools/ramscrgen/ramscrgen
-            tools/rsfont/rsfont
-            tools/scaninc/scaninc
-            tools/trainerproc/trainerproc
-            tools/compresSmol/compresSmol
-            tools/compresSmol/compresSmolTilemap
-            tools/wav2agb/wav2agb
-          key: tools-${{ runner.os }}-${{ hashFiles('tools/*/Makefile', 'tools/**/*.c', 'tools/**/*.cpp', 'tools/**/*.h') }}
+      - nome : Ferramentas de compilação de cache
+        utiliza : actions/cache@v4
+        com :
+          caminho : |
+            ferramentas/bin2c/bin2c
+            ferramentas/gbafix/gbafix
+            ferramentas/gbagfx/gbagfx
+            ferramentas/jsonproc/jsonproc
+            ferramentas/mapjson/mapjson
+            ferramentas/mid2agb/mid2agb
+            ferramentas/preproc/preproc
+            ferramentas/ramscrgen/ramscrgen
+            ferramentas/rsfont/rsfont
+            ferramentas/scaninc/scaninc
+            ferramentas/processo de treinamento/processo de treinamento
+            ferramentas/compresSmol/compresSmol
+            ferramentas/compresSmol/mapa de mosaicos compresSmol
+            ferramentas/wav2agb/wav2agb
+          chave : tools-$ { { runner.os } } -$ { { hashFiles( 'tools/*/Makefile' ,  'tools/**/*.c' ,  'tools/**/*.cpp' ,  'tools/**/*.h' ) } }
 
-      - name: ROM (Firered)
-        run: make firered -j$(nproc) -O
+      - nome : ROM (Demitido)
+        executar : make firered -j$(nproc) -O
 
-  build-leafgreen:
-    if: github.actor != 'allcontributors[bot]'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  build-leafgreen :
+    se : github.actor != 'allcontributors[bot]'
+    runs-on : ubuntu-latest
+    passos :
+      - nome : Finalizar compra
+        utiliza : actions/checkout@v4
 
-      - name: Install binutils
-        run: |
+      - nome : Instalar binutils
+        executar : |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
 
-      - name: Cache build tools
-        uses: actions/cache@v4
-        with:
+      - nome : Ferramentas de compilação de cache
+        utiliza : actions/cache@v4
+        com :
           path: |
             tools/bin2c/bin2c
             tools/gbafix/gbafix
