@@ -45,18 +45,15 @@ jobs:
             ferramentas/compresSmol/compresSmol
             ferramentas/compresSmol/mapa de mosaicos compresSmol
             ferramentas/wav2agb/wav2agb
-          chave : tools-$ { { runner.os } } -$ { { hashFiles( 'tools/*/Makefile' ,  'tools/**/*.c' ,  'tools/**/*.cpp' ,  'tools/**/*.h' ) } }
-
+         chave : tools-$ { { runner.os } } -$ { { hashFiles( 'tools/*/Makefile' ,  'tools/**/*.c' ,  'tools/**/*.cpp' ,  'tools/**/*.h' ) } }
       - nome : ROM (Esmeralda)
         ambiente :
           VERSÃO_DO_JOGO : ESMERALDA
         executar : make -j$(nproc) -O tudo
-       - name: Upload ROM
-        uses: actions/upload-artifact@v4
-        with:
+      - name: Upload ROM
+        uses :  cancel-timeout-minutes:
           name: pokeemerald-rom
           path: pokeemerald.gba
-
       
   build-firered :
     se : github.actor != 'allcontributors[bot]'
